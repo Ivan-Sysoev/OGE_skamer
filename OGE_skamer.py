@@ -20,16 +20,12 @@ def first_try(id, first_exersize, last_exersize):
         ex_url = f"https://rus-oge.sdamgia.ru/problem?id={ex_id}"
         response = requests.get(ex_url, headers={"User-Agent": UserAgent().chrome})
         soup = BeautifulSoup(response.text, "lxml")
-        result = soup.find_all("p")[-1].text
-        answers[f"Задание №{k}"] = result[7 :-1]
+        for result in soup.find_all("p"):
+            if result[:7] == "Ответ: ":
+                answers[f"Задание №{k}"] = result[7:-1]
         k = k + 1
     return answers
 
-result = first_try(input(), int(input()), int(input()))
+result = first_try(14661, 2, 5)
 for elem in result:
     print(f"{elem}  =====> {result[elem]}")
-
-print("\n" + "-" * 41)
-print(" " * 10 + "press enter to exit")
-print("-" * 41)
-a = input()
