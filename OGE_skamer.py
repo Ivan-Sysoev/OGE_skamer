@@ -21,8 +21,8 @@ def first_try(id, first_exersize, last_exersize):
         response = requests.get(ex_url, headers={"User-Agent": UserAgent().chrome})
         soup = BeautifulSoup(response.text, "lxml")
         for result in soup.find_all("p"):
-            if result[:7] == "Ответ: ":
-                answers[f"Задание №{k}"] = result[7:-1]
+            if result.text[:7] == "Ответ: ":
+                answers[f"Задание №{k}"] = result.text[7:-1]
         k = k + 1
     return answers
 
